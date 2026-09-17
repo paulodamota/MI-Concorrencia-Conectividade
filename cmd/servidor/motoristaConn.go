@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"slices"
 
@@ -21,10 +20,9 @@ func MotoristaConn(encoder *json.Encoder, decoder *json.Decoder, user string) {
 
 		//dar uma olhada nisso depois, pra tratar encerramento da conexão direito
 		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			log.Printf("Conexão encerrada: %v", err)
+			moto, _ := Motoristas.Load(user)
+			moto.(*Usuario).LoggedIn = false
+			log.Printf("Conexão de motorista '%s' encerrada no handle com erro: %v", user, err)
 			break
 		}
 

@@ -14,7 +14,9 @@ func PassageiroConn(encoder *json.Encoder, decoder *json.Decoder, user string) {
 		err := decoder.Decode(&req)
 
 		if err != nil {
-			log.Printf("Conexão encerrada: %v", err)
+			pass, _ := Passageiros.Load(user)
+			pass.(*Usuario).LoggedIn = false
+			log.Printf("Conexão de passageiro '%s' encerrada no handle com erro: %v", user, err)
 			break
 		}
 
@@ -33,7 +35,7 @@ func PassageiroConn(encoder *json.Encoder, decoder *json.Decoder, user string) {
 						Status:  "FALHA",
 						Message: "Nenhum itinerário encontrado para esta rota.",
 					}
-					continue
+					break
 				}
 
 				err := loopEscolhareserva(itinerarios, user, encoder, decoder, &req, &res)
@@ -173,8 +175,8 @@ func loopEscolhareserva(itinerarios []*Viagem, user string, encoder *json.Encode
 		//===========lê requisição do cliente============
 		err := decoder.Decode(req)
 		if err != nil {
-			grafo.LiberarVagas(i)
-			log.Printf("Conexão encerrada: %v", err)
+			grafo.LiberarVagas(i) //eu já libero quando erro, porqueeu sou tão triste
+			log.Printf("Conexão do passagerio '%s' encerrada, durante escolha da reserva: %v", user, err)
 			return err
 		}
 		//===============================================

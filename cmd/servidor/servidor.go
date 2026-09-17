@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net"
 	"sync"
@@ -81,10 +80,7 @@ func handleConnection(conn net.Conn) {
 		var req Request
 		err := decoder.Decode(&req)
 		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			log.Printf("Conexão encerrada: %v", err)
+			log.Printf("Conexão encerrada no menu principal: %v", err)
 			break
 		}
 
@@ -156,5 +152,4 @@ func handleConnection(conn net.Conn) {
 		}
 
 	}
-	log.Printf("Conexão encerrada")
 }
