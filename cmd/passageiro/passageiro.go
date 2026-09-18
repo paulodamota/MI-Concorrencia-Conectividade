@@ -60,11 +60,20 @@ func main() {
 				}
 
 				//escreve request na stream da conexão tcp
-				_ = encoder.Encode(req)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				//le resposta da conexão
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				//exibe resposta para o cliente
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
@@ -89,10 +98,19 @@ func main() {
 					Senha: senha,
 				}
 
-				_ = encoder.Encode(req)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 
@@ -106,10 +124,19 @@ func main() {
 				Acao: "DESCONECTAR",
 			}
 
-			_ = encoder.Encode(req)
+			err = encoder.Encode(req)
+			if err != nil {
+				fmt.Println("Erro ao enviar mensagem para o servidor!")
+				fmt.Println("Programa será encerrado")
+				os.Exit(1)
+			}
 
 			var res Resposta
-			_ = decoder.Decode(&res)
+			if err := decoder.Decode(&res); err != nil {
+				log.Printf("Erro ao ler resposta: %v", err)
+				fmt.Println("Programa será encerrado")
+				os.Exit(1)
+			}
 
 			fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 
@@ -180,7 +207,8 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 			var res Resposta
 			if err := decoder.Decode(&res); err != nil {
 				log.Printf("Erro ao ler resposta: %v. Operação encerrada", err)
-				break
+				fmt.Println("Programa será encerrado")
+				os.Exit(1)
 			}
 
 			fmt.Printf("\nServidor diz: \n[%s] %s\n", res.Status, res.Message)
@@ -244,12 +272,14 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 				req = Request{Acao: acaoReq}
 				if err := encoder.Encode(req); err != nil {
 					log.Printf("Erro ao enviar requisição: %v", err)
-					break
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
 				}
 
 				if err := decoder.Decode(&res); err != nil {
 					log.Printf("Erro ao ler resposta: %v", err)
-					break
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
 				}
 
 				fmt.Printf("\nServidor diz: \n[%s] %s\n", res.Status, res.Message)
@@ -265,9 +295,18 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 				var req = Request{
 					Acao: "LISTAR_RESERVAS",
 				}
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 				ImprimirReservas(res.Viagens)
 
@@ -293,8 +332,17 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 					ID:   remover,
 				}
 
-				_ = encoder.Encode(req)
-				_ = decoder.Decode(&res)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 				fmt.Printf("Reserva de ID %s removida", remover)
 
@@ -305,10 +353,19 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 					Acao: "LISTAR_RESERVAS",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 
@@ -320,10 +377,19 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 					Acao: "GET_NOTI",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 
@@ -336,10 +402,19 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 					Acao: "LOG_OUT",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var res Resposta
-				_ = decoder.Decode(&res)
+				if err := decoder.Decode(&res); err != nil {
+					log.Printf("Erro ao ler resposta: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 

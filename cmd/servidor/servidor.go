@@ -94,7 +94,9 @@ func handleConnection(conn net.Conn) {
 			res = Cadastrar(req, &Motoristas)
 
 			if res.Status == "SUCESSO" {
+				ViagensMoto.mu.Lock()
 				ViagensMoto.Viagens[req.Nome] = InicializarViagensByUser()
+				ViagensMoto.mu.Unlock()
 				log.Printf("Novo Motorista \"%s\" cadastrado com senha '%s'", req.Nome, req.Senha)
 				userHandler = func() { MotoristaConn(encoder, decoder, req.Nome) }
 			}

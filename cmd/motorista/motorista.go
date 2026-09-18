@@ -59,11 +59,20 @@ func main() {
 				}
 
 				//escreve request na stream da conexão tcp
-				_ = encoder.Encode(req)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				//le resposta da conexão
 				var resp Resposta
-				_ = decoder.Decode(&resp)
+				if err := decoder.Decode(&resp); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				//exibe resposta para o cliente
 				fmt.Printf("\nServidor diz: [%s] %s\n", resp.Status, resp.Message)
@@ -88,10 +97,19 @@ func main() {
 					Senha: senha,
 				}
 
-				_ = encoder.Encode(req)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var resp Resposta
-				_ = decoder.Decode(&resp)
+				if err := decoder.Decode(&resp); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", resp.Status, resp.Message)
 
@@ -105,10 +123,19 @@ func main() {
 				Acao: "DESCONECTAR",
 			}
 
-			_ = encoder.Encode(req)
+			err = encoder.Encode(req)
+			if err != nil {
+				fmt.Println("Erro ao enviar mensagem para o servidor!")
+				fmt.Println("Programa será encerrado")
+				os.Exit(1)
+			}
 
 			var resp Resposta
-			_ = decoder.Decode(&resp)
+			if err := decoder.Decode(&resp); err != nil {
+				log.Printf("Erro ao ler resposta do servidor: %v", err)
+				fmt.Println("Programa será encerrado")
+				os.Exit(1)
+			}
 
 			fmt.Printf("\nServidor diz: [%s] %s\n", resp.Status, resp.Message)
 
@@ -163,10 +190,19 @@ func LoggedIn(user string, encoder *json.Encoder, decoder *json.Decoder, scanner
 					Trechos: trechos,
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var resp Resposta
-				_ = decoder.Decode(&resp)
+				if err := decoder.Decode(&resp); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\n[%s] %s\n", resp.Status, resp.Message)
 
@@ -178,7 +214,12 @@ func LoggedIn(user string, encoder *json.Encoder, decoder *json.Decoder, scanner
 					Acao: "LISTAR_ROTAS",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var res Resposta
 				_ = decoder.Decode(&res)
@@ -210,7 +251,12 @@ func LoggedIn(user string, encoder *json.Encoder, decoder *json.Decoder, scanner
 					ID:   remover,
 				}
 
-				_ = encoder.Encode(req)
+				err = encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 				_ = decoder.Decode(&res)
 				fmt.Printf("Servidor diz: \n[%s] %s\n", res.Status, res.Message)
 				fmt.Printf("\nViagem de ID %s removida", remover)
@@ -222,10 +268,19 @@ func LoggedIn(user string, encoder *json.Encoder, decoder *json.Decoder, scanner
 					Acao: "LISTAR_ROTAS",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var resp Resposta
-				_ = decoder.Decode(&resp)
+				if err := decoder.Decode(&resp); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", resp.Status, resp.Message)
 
@@ -237,10 +292,19 @@ func LoggedIn(user string, encoder *json.Encoder, decoder *json.Decoder, scanner
 					Acao: "LOG_OUT",
 				}
 
-				_ = encoder.Encode(req)
+				err := encoder.Encode(req)
+				if err != nil {
+					fmt.Println("Erro ao enviar mensagem para o servidor!")
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				var resp Resposta
-				_ = decoder.Decode(&resp)
+				if err := decoder.Decode(&resp); err != nil {
+					log.Printf("Erro ao ler resposta do servidor: %v", err)
+					fmt.Println("Programa será encerrado")
+					os.Exit(1)
+				}
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", resp.Status, resp.Message)
 

@@ -87,8 +87,13 @@ func Carregar() {
 	}
 
 	// restaura viagens
+	ViagensMoto.mu.Lock()
 	ViagensMoto.Viagens = dados.ViagensMoto
+	ViagensMoto.mu.Unlock()
+
+	ViagensPass.mu.Lock()
 	ViagensPass.Viagens = dados.ViagensPass
+	ViagensPass.mu.Unlock()
 
 	// renconstruindo grado
 	for userMotorista, viagens := range ViagensMoto.Viagens {

@@ -7,7 +7,7 @@ import (
 
 /*
 Cadastro
-verifica se já usuario com aquele nome antes de permitir cadastro
+verifica se já há usuario com aquele nome antes de permitir cadastro
 ativa flag de login ao cadastra e fazer login do usario
 */
 func Cadastrar(req Request, usuarios *sync.Map) Resposta {

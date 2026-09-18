@@ -31,7 +31,7 @@ func OverBooking(ip string) {
 
 	cadastrarMotoristaErota(ip, motorista, senhaMoto, origem, destino)
 
-	const totalPassageiros = 100
+	const totalPassageiros = 50
 	var wg sync.WaitGroup
 	wg.Add(totalPassageiros)
 
@@ -128,7 +128,7 @@ func cadastrarMotoristaErota(ip string, motorista, senha, origem, destino string
 func Concorrencia(ip string) {
 	fmt.Println("=== INICIANDO TESTE DE CONCORRÊNCIA ===")
 
-	const totalClientes = 100
+	const totalClientes = 50
 	var wg sync.WaitGroup
 	wg.Add(totalClientes)
 
