@@ -35,7 +35,7 @@ func (g *GrafoRotas) AdicionarViagem(user string, viagem *Viagem) {
 BuscarRotas encontra todos os itinerários possíveis entre a origem e o destino
 usando recursividade
 */
-func (g *GrafoRotas) BuscarRotas(origem string, destino string) []*Viagem {
+func (g *GrafoRotas) BuscarRotas(origem string, destino string, data string) []*Viagem {
 	g.mu.RLock()
 	defer g.mu.RUnlock()
 
@@ -43,12 +43,12 @@ func (g *GrafoRotas) BuscarRotas(origem string, destino string) []*Viagem {
 	caminhoAtual := []*Trecho{}
 	visitados := make(map[string]bool)
 
-	g.dfsBusca(origem, destino, caminhoAtual, visitados, &resultados)
+	g.dfsBusca(origem, destino, data, caminhoAtual, visitados, &resultados)
 	return resultados
 }
 
 // busca em profundidade recursivo para achar caminhos compostos
-func (g *GrafoRotas) dfsBusca(atual string, destino string, caminho []*Trecho, visitados map[string]bool, resultados *[]*Viagem) {
+func (g *GrafoRotas) dfsBusca(atual string, destino string, data string, caminho []*Trecho, visitados map[string]bool, resultados *[]*Viagem) {
 	// caso base salva copia do caminho encontrado
 	if atual == destino {
 		caminhoCopia := make([]*Trecho, len(caminho))
@@ -65,15 +65,16 @@ func (g *GrafoRotas) dfsBusca(atual string, destino string, caminho []*Trecho, v
 		// verifica se há vagas disponíveis
 		// e se a cidade de destino foi visitada
 		t.mu.Lock()
-		vagasDisponiveis := t.Vagas > 0
+		filtroData := ((data == t.Data) || data == "")
+		vagasDisponiveis := (t.Vagas > 0)
 		t.mu.Unlock()
 
-		if vagasDisponiveis && !visitados[t.Destino] {
+		if filtroData && vagasDisponiveis && !visitados[t.Destino] {
 			// adiciona o trecho ao caminho
 			caminho = append(caminho, t)
 
 			// continua a busca a partir da próxima cidade
-			g.dfsBusca(t.Destino, destino, caminho, visitados, resultados)
+			g.dfsBusca(t.Destino, destino, data, caminho, visitados, resultados)
 
 			// remove o ultimo trecho para testar outras opções
 			caminho = caminho[:len(caminho)-1]

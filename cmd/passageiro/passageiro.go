@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 	. "vaijunto/shared"
 )
 
@@ -153,10 +154,22 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 				continue
 			}
 
+			fmt.Printf("\nInforme a data desejada para a viagem (no formato 'dd-mm-yyyy') ou deixe em branco para não filtrar data: \n>>")
+			scanner.Scan()
+			data := scanner.Text()
+			_, err := time.Parse("02-01-2006", data)
+			for err != nil && (strings.TrimSpace(data) != "") {
+				fmt.Print("Formata de data invalido!!, Siga o padrão: dd-mm-yyyy\n>>")
+				scanner.Scan()
+				data = scanner.Text()
+				_, err = time.Parse("02-01-2006", data)
+			}
+
 			req := Request{
 				Acao:    "BUSCAR_E_RESERVAR",
 				Origem:  rota[0],
 				Destino: rota[1],
+				Data:    data,
 			}
 
 			if err := encoder.Encode(req); err != nil {
@@ -183,7 +196,7 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 
 				//essa função enumera as viagens enviadas,
 				// não é muito adequado, aqui que só tem uma
-				ImprimirReservas(res.Viagens)
+				ImprimirReservasEscolha(res.Viagens)
 
 				fmt.Println("\nEscolha uma ação:")
 				fmt.Println("1. Confirmar e reservar esta vaga")
@@ -191,10 +204,29 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 				fmt.Println("3. Cancelar busca")
 				fmt.Print(">> ")
 
-				if !scanner.Scan() {
-					break
+				fmt.Println("Você tem 10 segundos para tomar uma ação, ou a operação será cancelada:")
+
+				//canaaaaaal
+				canal := make(chan string)
+
+				// goroutine só pra ler hahaha
+				go func() {
+					reader := bufio.NewReader(os.Stdin)
+					text, _ := reader.ReadString('\n')
+					canal <- text
+				}()
+
+				// ou digita ou vapos
+				var input string
+				select {
+				case texto := <-canal:
+					input = texto
+
+				case <-time.After(10 * time.Second):
+					fmt.Println("\n[Tempo esgotado!] A operação será cancelada por inatividade.")
+					input = "3"
 				}
-				input := strings.TrimSpace(scanner.Text())
+				input = strings.TrimSpace(input)
 
 				var acaoReq string
 				switch input {
@@ -295,7 +327,7 @@ func LoggedIn(encoder *json.Encoder, decoder *json.Decoder, scanner *bufio.Scann
 
 				fmt.Printf("\nServidor diz: [%s] %s\n", res.Status, res.Message)
 
-				ImprimirNotificacoes(res.Dados)
+				ImprimirNotificacoes(res.Notificacoes)
 
 			}
 		case "5": //logout

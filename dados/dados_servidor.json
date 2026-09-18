@@ -1,0 +1,88 @@
+{
+  "motoristas": {
+    "jose": {
+      "Nome": "jose",
+      "Senha": "123",
+      "LoggedIn": false,
+      "Notificacoes": null
+    },
+    "motos": {
+      "Nome": "motos",
+      "Senha": "123",
+      "LoggedIn": false,
+      "Notificacoes": null
+    }
+  },
+  "passageiros": {
+    "cansei da minha vida": {
+      "Nome": "cansei da minha vida",
+      "Senha": "123",
+      "LoggedIn": true,
+      "Notificacoes": null
+    },
+    "paulo": {
+      "Nome": "paulo",
+      "Senha": "123",
+      "LoggedIn": false,
+      "Notificacoes": null
+    },
+    "savio": {
+      "Nome": "savio",
+      "Senha": "123",
+      "LoggedIn": false,
+      "Notificacoes": null
+    }
+  },
+  "viagens_moto": {
+    "jose": {
+      "c31a14e4-12a9-4ab4-b972-7ea8b413c305": {
+        "ID": "c31a14e4-12a9-4ab4-b972-7ea8b413c305",
+        "Dono": "jose",
+        "Trechos": [
+          {
+            "ViagemID": "c31a14e4-12a9-4ab4-b972-7ea8b413c305",
+            "ID": "0b7cee8c-7469-4ed3-bd71-a5108ce67665",
+            "Motorista": "jose",
+            "Origem": "Salvador",
+            "Destino": "Simões Filho",
+            "Vagas": 1,
+            "Preco": 20,
+            "data": "22-12-2007",
+            "horario": "123",
+            "ReservasAssociadasIDS": [
+              {
+                "ID": "372c4192-7433-4837-a8dc-89a8f8d8f558",
+                "User": "cansei da minha vida"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "motos": {
+      "cff59cde-5431-4dc0-8336-1d4ac4e52e06": {
+        "ID": "cff59cde-5431-4dc0-8336-1d4ac4e52e06",
+        "Dono": "motos",
+        "Trechos": [
+          {
+            "ViagemID": "cff59cde-5431-4dc0-8336-1d4ac4e52e06",
+            "ID": "014a3287-5556-4cc5-b37e-f4c9b551f727",
+            "Motorista": "motos",
+            "Origem": "Feira de Santana",
+            "Destino": "Salvador",
+            "Vagas": 40,
+            "Preco": 409,
+            "data": "40",
+            "horario": "40",
+            "ReservasAssociadasIDS": []
+          }
+        ]
+      }
+    }
+  },
+  "viagens_pass": {
+    "cansei da minha vida": {},
+    "paulo": {},
+    "savio": {}
+  }
+}

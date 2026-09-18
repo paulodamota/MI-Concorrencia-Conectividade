@@ -1,0 +1,41 @@
+2026/09/18 00:05:20 === SERVIDOR INICIADO ===
+2026/09/18 00:06:03 Novo Passageiro "paulo" cadastrado com senha '123'
+2026/09/18 00:06:12 Novo Motorista "motos" cadastrado com senha '123'
+2026/09/18 00:06:27 Lista de trechos enviada pelo motorista 'motos' 
+Paradas 1
+2026/09/18 00:06:42 Tentativa de reserva de rota enviada pelo passageiro paulo: Origem: Feira de Santana, Destino: Salvador
+2026/09/18 00:08:58 Passageiro 'paulo' fez logout 
+2026/09/18 00:09:15 === SERVIDOR INICIADO ===
+2026/09/18 00:09:56 Novo Passageiro "savio" cadastrado com senha '123'
+2026/09/18 00:09:59 Tentativa de reserva de rota enviada pelo passageiro savio: Origem: Feira de Santana, Destino: Salvador
+2026/09/18 00:12:13 === SERVIDOR INICIADO ===
+2026/09/18 00:12:44 Passageiro "savio" fez login
+2026/09/18 00:12:49 Tentativa de reserva de rota enviada pelo passageiro savio: Origem: Feira de Santana, Destino: Salvador
+2026/09/18 00:39:43 === SERVIDOR INICIADO ===
+2026/09/18 00:40:02 Novo Motorista "jose" cadastrado com senha '123'
+2026/09/18 00:40:36 Lista de trechos enviada pelo motorista 'jose' 
+Paradas 1
+2026/09/18 00:40:50 Novo Passageiro "cansei da minha vida" cadastrado com senha '123'
+2026/09/18 00:41:12 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho
+2026/09/18 00:41:26 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho
+2026/09/18 00:41:44 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho
+2026/09/18 00:42:33 Conexão de passageiro 'cansei da minha vida' encerrada no handle com erro: EOF
+2026/09/18 00:42:33 Conexão encerrada no menu principal: EOF
+2026/09/18 00:43:34 Conexão de motorista 'jose' encerrada no handle com erro: EOF
+2026/09/18 00:43:34 Conexão encerrada no menu principal: EOF
+2026/09/18 00:43:41 === SERVIDOR INICIADO ===
+2026/09/18 00:44:03 Motorista "jose" fez login
+2026/09/18 00:44:31 Passageiro "cansei da minha vida" fez login
+2026/09/18 00:46:37 === SERVIDOR INICIADO ===
+2026/09/18 00:46:52 Passageiro "cansei da minha vida" fez login
+2026/09/18 00:48:42 === SERVIDOR INICIADO ===
+2026/09/18 00:49:03 Passageiro "cansei da minha vida" fez login
+2026/09/18 00:50:17 Conexão de passageiro 'cansei da minha vida' encerrada no handle com erro: EOF
+2026/09/18 00:50:17 Conexão encerrada no menu principal: EOF
+2026/09/18 00:50:23 === SERVIDOR INICIADO ===
+2026/09/18 00:51:02 Passageiro "cansei da minha vida" fez login
+2026/09/18 00:51:06 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho
+2026/09/18 00:52:36 === SERVIDOR INICIADO ===
+2026/09/18 00:52:53 Passageiro "cansei da minha vida" fez login
+2026/09/18 00:53:01 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho
+2026/09/18 00:53:24 Tentativa de reserva de rota enviada pelo passageiro cansei da minha vida: Origem: Salvador, Destino: Simões Filho

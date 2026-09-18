@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"time"
 	. "vaijunto/shared"
 )
 
@@ -315,9 +316,16 @@ func DefinirVagasTrechos(scanner *bufio.Scanner, paradas []string, user string) 
 			return nil, true
 		}
 
-		fmt.Printf("Qual a data da viagem?: ")
+		fmt.Printf("Qual a data da viagem? (Padrão dd-mm-yyyy) ")
 		scanner.Scan()
 		data := scanner.Text()
+		_, err := time.Parse("02-01-2006", data)
+		for err != nil {
+			fmt.Print("Formata de data invalido!!, Siga o padrão: dd-mm-yyyy")
+			scanner.Scan()
+			data = scanner.Text()
+			_, err = time.Parse("02-01-2006", data)
+		}
 
 		fmt.Printf("Qual o horario da viagem?: ")
 		scanner.Scan()

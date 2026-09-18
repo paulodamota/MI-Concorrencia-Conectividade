@@ -27,7 +27,7 @@ func PassageiroConn(encoder *json.Encoder, decoder *json.Decoder, user string) {
 			{
 				log.Printf("Tentativa de reserva de rota enviada pelo passageiro %s: Origem: %s, Destino: %s", user, req.Origem, req.Destino)
 
-				itinerarios := grafo.BuscarRotas(req.Origem, req.Destino)
+				itinerarios := grafo.BuscarRotas(req.Origem, req.Destino, req.Data)
 
 				//caso não haja rotas
 				if len(itinerarios) == 0 {
@@ -97,9 +97,9 @@ func PassageiroConn(encoder *json.Encoder, decoder *json.Decoder, user string) {
 				noti := passageiro.(*Usuario).Notificacoes
 				mensagem := fmt.Sprintf("Notificações encontradas: [%d]", len(noti))
 				res = Resposta{
-					Status:  "SUCESSO",
-					Message: mensagem,
-					Dados:   noti,
+					Status:       "SUCESSO",
+					Message:      mensagem,
+					Notificacoes: noti,
 				}
 
 				logout = true

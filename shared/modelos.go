@@ -16,15 +16,16 @@ type Request struct {
 
 	Origem  string       `json:"origem,omitempty"`
 	Destino string       `json:"destino,omitempty"`
-	Trechos []TrechoData `json:"trechos,omitempty"`
+	Data    string       `json:"Data,omitempty"`
+	Trechos []TrechoData `json:"trechos,omitempty"` //quando o motorista vai montar a rota ele envia os trechos
 }
 
 type Resposta struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
 
-	Dados   []string     `json:"dados,omitempty"`
-	Viagens []ViagemData `json:"trechos,omitempty"`
+	Notificacoes []string     `json:"dados,omitempty"`
+	Viagens      []ViagemData `json:"trechos,omitempty"`
 }
 
 /*
@@ -171,6 +172,35 @@ func ImprimirReservas(viagens []ViagemData) {
 				fmt.Printf("\t\t%s -> %s\n", trecho.Origem, trecho.Destino)
 				fmt.Printf("\t\tData: %s, Horario:%s \n", trecho.Data, trecho.Horario)
 				fmt.Printf("\t\tVagas: %d | Preço: R$ %.2f\n", trecho.Vagas, trecho.Preco)
+				fmt.Printf("\t\tMotorista desse trecho: %s\n", trecho.Motorista)
+			}
+		} else {
+			fmt.Println("  Nenhum trecho cadastrado para esta reserva.")
+		}
+
+		fmt.Println("---------------------------------------------------")
+	}
+	fmt.Println("===================================================")
+}
+
+func ImprimirReservasEscolha(viagens []ViagemData) {
+	fmt.Println("================ RESUMO DE RESERVAS ================")
+
+	for h, viagem := range viagens {
+		fmt.Printf("Reserva #%d:\n", h+1)
+		fmt.Printf("\tDono : %s\n", viagem.Dono)
+		fmt.Printf("\tID da reserva: %s\n", viagem.ID)
+		fmt.Printf("\n\tTotal de Trechos: %d\n", len(viagem.Trechos))
+
+		if len(viagem.Trechos) > 0 {
+			fmt.Println("\tDetalhes dos Trechos:")
+			for i, trecho := range viagem.Trechos {
+				fmt.Printf("\n")
+				fmt.Printf("\tTrecho #%d:\n", i)
+				fmt.Printf("\t\tID do trecho: %s\n", trecho.ID)
+				fmt.Printf("\t\t%s -> %s\n", trecho.Origem, trecho.Destino)
+				fmt.Printf("\t\tData: %s, Horario:%s \n", trecho.Data, trecho.Horario)
+				fmt.Printf("\t\tVagas: %d | Preço: R$ %.2f\n", trecho.Vagas+1, trecho.Preco)
 				fmt.Printf("\t\tMotorista desse trecho: %s\n", trecho.Motorista)
 			}
 		} else {
