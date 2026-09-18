@@ -4,17 +4,24 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+	"os"
 	"sync"
 	. "vaijunto/shared"
 )
 
 func main() {
+	var servidorIP string
 
-	OverBooking()
-	Concorrencia()
+	if len(os.Args) > 1 {
+		ipArg := os.Args[1]
+		servidorIP = ipArg + ":6742" // Junta o IP digitado com a porta padrão
+	}
+
+	OverBooking(servidorIP)
+	Concorrencia(servidorIP)
 }
 
-func OverBooking() {
+func OverBooking(ip string) {
 	fmt.Println("=== INICIANDO TESTE DE OVERBOOKING (CONCORRÊNCIA DE RESERVAS) ===")
 
 	motorista := "moto_teste"
@@ -22,9 +29,9 @@ func OverBooking() {
 	origem := "Centro"
 	destino := "Praia"
 
-	cadastrarMotoristaErota(motorista, senhaMoto, origem, destino)
+	cadastrarMotoristaErota(ip, motorista, senhaMoto, origem, destino)
 
-	const totalPassageiros = 10
+	const totalPassageiros = 100
 	var wg sync.WaitGroup
 	wg.Add(totalPassageiros)
 
@@ -38,7 +45,7 @@ func OverBooking() {
 
 			nomePassageiro := fmt.Sprintf("pass_%d", id)
 
-			conn, err := net.Dial("tcp", "192.168.15.111:6742")
+			conn, err := net.Dial("tcp", ip)
 			if err != nil {
 				fmt.Printf("[Passageiro %d] Erro ao conectar: %v\n", id, err)
 				return
@@ -88,8 +95,8 @@ func OverBooking() {
 	fmt.Println("==========================================")
 }
 
-func cadastrarMotoristaErota(motorista, senha, origem, destino string) {
-	conn, err := net.Dial("tcp", "192.168.15.111:6742")
+func cadastrarMotoristaErota(ip string, motorista, senha, origem, destino string) {
+	conn, err := net.Dial("tcp", ip)
 	if err != nil {
 		return
 	}
@@ -118,24 +125,24 @@ func cadastrarMotoristaErota(motorista, senha, origem, destino string) {
 	fmt.Println("-> Motorista cadastrado e rota de 1 vaga criada com sucesso.")
 }
 
-func Concorrencia() {
+func Concorrencia(ip string) {
 	fmt.Println("=== INICIANDO TESTE DE CONCORRÊNCIA ===")
 
-	const totalClientes = 10
+	const totalClientes = 100
 	var wg sync.WaitGroup
 	wg.Add(totalClientes)
 
 	nomeUsuario := "teste_concorrente"
 	senhaUsuario := "123456"
 
-	cadastrarConta(nomeUsuario, senhaUsuario)
+	cadastrarConta(ip, nomeUsuario, senhaUsuario)
 
 	// Dispara várias goroutines simultâneas
 	for i := 1; i <= totalClientes; i++ {
 		go func(id int) {
 			defer wg.Done()
 
-			conn, err := net.Dial("tcp", "192.168.15.111:6742")
+			conn, err := net.Dial("tcp", ip)
 			if err != nil {
 				fmt.Printf("[Cliente %d] Erro ao conectar ao servidor: %v\n", id, err)
 				return
@@ -171,8 +178,8 @@ func Concorrencia() {
 	fmt.Println("=== TESTE DE CONCORRÊNCIA FINALIZADO ===")
 }
 
-func cadastrarConta(nome, senha string) {
-	conn, err := net.Dial("tcp", "192.168.15.111:6742")
+func cadastrarConta(ip string, nome, senha string) {
+	conn, err := net.Dial("tcp", ip)
 
 	if err != nil {
 		return
